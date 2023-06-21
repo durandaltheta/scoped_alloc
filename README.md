@@ -71,6 +71,7 @@ user_struct_t* alloc_user_struct(int c) {
     p->a = 1;
     p->b = 2;
     p->c = c;
+    return p;
 }
 
 void destroy_user_struct(void* v) {
