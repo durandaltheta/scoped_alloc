@@ -44,7 +44,7 @@ int main() {
 
 Potential output:
 ```
-$ ./a.output
+$ ./a.out
 a[1], b[2], c[4]
 $
 ```
@@ -92,7 +92,7 @@ int main() {
 
 Potential output:
 ```
-$ ./a.output
+$ ./a.out
 a[1], b[2], c[5]
 Destroying user_struct
 $
