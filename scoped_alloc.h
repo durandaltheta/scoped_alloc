@@ -30,14 +30,12 @@ _Thread_local _destructor_scope_node_t* _tl_destructor_scope_node = NULL;
     _destructor_scope_node_t* _parent_destructor_scope_node = _tl_destructor_scope_node;\
     _tl_destructor_scope_node = NULL; \
     FUNCTION(__VA_ARGS__);\
-    _destructor_scope_node_t* cur_node = *node;\
-    _destructor_scope_node_t* prev_node = NULL;\
-    *node = NULL; \
+    _destructor_scope_node_t* cur_node = *_tl_destructor_scope_node;\
     while(cur_node) {\
         if(cur_node->destructor) {\
             cur_node->destructor(cur_node->data);\
         }\
-        prev_node = cur_node;\
+        _destructor_scope_node_t* prev_node = cur_node;\
         cur_node = cur_node->next;\
         free(prev_node);\
     }\
@@ -69,10 +67,9 @@ _Thread_local _destructor_scope_node_t* _tl_destructor_scope_node = NULL;
  * This macro assumes given `alloc()` allocates the returned pointer with
  * `malloc()`, and automatically uses `free()` as the destructor.
  *
- * @param alloc a function which allocates and constructs a pointer. Should return allocated pointer.
- * @param ... optional arguments for `alloc()`
+ * @param type the expression to be passed to `sizeof()` within `malloc()`.
  * @return a pointer to the allocated value
  */
-#define scoped_malloc(alloc, ...) scoped_alloc(free, alloc, __VA_ARGS__)
+#define scoped_malloc(type) scoped_alloc(free, malloc, sizeof(type))
 
 #endif
