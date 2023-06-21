@@ -1,7 +1,6 @@
 # scoped_alloc
-A simple C scoped allocated pointer library 
+A simple C scoped allocated pointer library.
 
-## Simple allocated pointer scopes
 Enter a new scope with `enter_alloc_scope(user_function, optional_user_args...)`. 
 
 Within `user_function`, any calls to `scope_alloc()` or `scope_malloc()`
@@ -13,6 +12,9 @@ their destructors called.
 Any calls to `scoped_alloc()`/`scope_malloc()` made before calling 
 `enter_alloc_scope()` must be handled by a previous/parent call to
 `enter_alloc_scope()`.
+
+## Simple allocated pointer scopes
+Simplest usage is to replace calls to `malloc()` with `scoped_malloc()`.
 
 ```
 #include <stdio.h>
