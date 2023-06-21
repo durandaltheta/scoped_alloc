@@ -23,17 +23,15 @@ Simplest usage is to replace calls to `malloc()` with `scoped_malloc()`.
 struct user_struct_t {
     int a;
     int b;
-    int c;
 } s_init {
-    .a = 1,
-    .b = 2
+    .a = 1
 };
 
-void scoped_user_function(int c) {
+void scoped_user_function(int b) {
     s_t* p = scope_malloc(user_struct_t); // allocate scoped pointer to a user_struct_t
     *p = s_init;
-    p->c = c;
-    printf("a[%d], b[%d], c[%d]\n", p->a, p->b, p->c);
+    p->b = b;
+    printf("user_struct: a[%d], b[%d]\n", p->a, p->b);
     // no manual free
 }
 
@@ -47,7 +45,7 @@ int main() {
 Potential output:
 ```
 $ ./a.out
-a[1], b[2], c[4]
+user_struct: a[1], b[4]
 $
 ```
 
@@ -63,14 +61,12 @@ destructor and constructor (with any necessary arguments).
 struct user_struct_t {
     int a;
     int b;
-    int c;
 };
 
-user_struct_t* alloc_user_struct(int c) {
+user_struct_t* alloc_user_struct(int b) {
     user_struct_t* p = malloc(sizeof(user_struct_t));
     p->a = 1;
-    p->b = 2;
-    p->c = c;
+    p->b = b;
     return p;
 }
 
@@ -82,7 +78,7 @@ void destroy_user_struct(void* v) {
 void scoped_user_function() {
     // allocate scoped pointer with custom functions
     s_t* p = scope_alloc(destroy_user_struct, alloc_user_struct, 5); 
-    printf("a[%d], b[%d], c[%d]\n", p->a, p->b, p->c);
+    printf("user_struct: a[%d], b[%d]\n", p->a, p->b);
     // no manual free
 }
 
@@ -96,7 +92,7 @@ int main() {
 Potential output:
 ```
 $ ./a.out
-a[1], b[2], c[5]
+user_struct: a[1], b[5]
 Destroying user_struct
 $
 ```
