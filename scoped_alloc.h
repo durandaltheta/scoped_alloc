@@ -39,7 +39,7 @@ _Thread_local _destructor_scope_node_t* _tl_destructor_scope_node = NULL;
         cur_node = cur_node->next;\
         free(prev_node);\
     }\
-    _tl_destructor_scope_node_t = _parent_destructor_scope_node;\
+    _tl_destructor_scope_node = _parent_destructor_scope_node;\
     }
 
 /**
