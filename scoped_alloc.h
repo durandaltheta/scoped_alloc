@@ -48,7 +48,7 @@ _Thread_local _destructor_scope_node_t* _tl_destructor_scope_node = NULL;
  * This function uses GNU C statement expressions.
  *
  * @param destructor a function which will be passed the value returned by `alloc(...)` when exitting the current scope, in reverse order of calls to `scoped_alloc()`.
- * @param alloc a function which allocates and constructs a pointer. Should return allocated pointer.
+ * @param alloc a function which allocates and constructs a pointer. This function should return the allocated pointer (or NULL if failure).
  * @param ... optional arguments for `alloc()`
  * @return a pointer to the allocated value
  */
