@@ -62,7 +62,7 @@ _Thread_local _destructor_scope_node_t* _tl_destructor_scope_node = NULL;
     })
 
 /**
- * @brief a simplification of `scoped_malloc` 
+ * @brief a simplification of `scoped_alloc` 
  *
  * This macro assumes given `alloc()` allocates the returned pointer with
  * `malloc()`, and automatically uses `free()` as the destructor.
